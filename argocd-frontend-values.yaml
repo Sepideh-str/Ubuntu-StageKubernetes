@@ -1,0 +1,50 @@
+controller:
+  nodeSelector:
+    zone: frontend
+  resources:
+    requests:
+      cpu: 250m
+      memory: 256Mi
+
+applicationSet:
+  nodeSelector:
+    zone: frontend
+
+notifications:
+  nodeSelector:
+    zone: frontend
+
+repoServer:
+  nodeSelector:
+    zone: frontend
+  livenessProbe:
+    timeoutSeconds: 10
+  resources:
+    requests:
+      cpu: 250m
+      memory: 256Mi
+
+server:
+  nodeSelector:
+    zone: frontend
+  insecure: true
+  service:
+    type: ClusterIP
+
+redis:
+  nodeSelector:
+    zone: frontend
+  image:
+    repository: repository.crouseco.com/docker-proxy/redis
+    tag: latest
+
+dex:
+  enabled: false
+
+configs:
+  params:
+    server.insecure: true
+
+global:
+  image:
+    repository: repository.crouseco.com/quay-proxy/argoproj/argocd
